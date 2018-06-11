@@ -1,10 +1,10 @@
-FROM alpine:3.6
+FROM alpine:3.7
 
-ARG RTORRENT_VER=0.9.6
-ARG LIBTORRENT_VER=0.13.6
-ARG MEDIAINFO_VER=0.7.99
+ARG RTORRENT_VER=0.9.7
+ARG LIBTORRENT_VER=0.13.7
+ARG MEDIAINFO_VER=18.05
 ARG FILEBOT_VER=4.7.9
-ARG CHROMAPRINT_VER=1.4.2
+ARG CHROMAPRINT_VER=1.4.3
 ARG LIBZEN_VER=0.4.37
 ARG FLOOD_VER=1.0.0
 ARG BUILD_CORES
@@ -38,6 +38,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     ncurses-dev \
     curl-dev \
     binutils \
+    linux-headers \
  && apk add \
     ca-certificates \
     curl \
@@ -55,8 +56,8 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     openjdk8-jre \
     java-jna-native \
  && cd /tmp && mkdir libtorrent rtorrent \
- && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
- && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/archive/${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
+ && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/v${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
+ && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_VER}/rtorrent-${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
  && cd /tmp \
  && git clone https://github.com/mirror/xmlrpc-c.git \
  && git clone https://github.com/Rudde/mktorrent.git \
