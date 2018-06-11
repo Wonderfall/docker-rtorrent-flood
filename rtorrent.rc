@@ -1,0 +1,28 @@
+scgi_local = /tmp/rtorrent.sock
+
+encoding_list = UTF-8
+port_range = 49184-49184
+port_random = no
+check_hash = no
+directory = /data/torrents
+session = /data/.session
+encryption = allow_incoming, try_outgoing, enable_retry
+use_udp_trackers = yes
+dht = off
+peer_exchange = no
+
+min_peers = 1
+max_peers = 100
+min_peers_seed = 1
+max_peers_seed = 50
+max_uploads = 15
+
+network.xmlrpc.size_limit.set = 10000000
+
+schedule = watch_directory,1,1,"load_start=/data/.watch/*.torrent"
+schedule = untied_directory,5,5,"stop_untied=/data/.watch/*.torrent"
+schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/tmp/rtorrent.sock"
+schedule = insufficient_disk_space,1,30,close_low_diskspace=500M
+
+system.method.set_key=event.download.finished,filebot,"execute={/usr/bin/postdl,$d.get_base_path=,$d.get_name=,$d.get_custom1=}"
+system.method.set_key=event.download.erased,filebot_cleaner,"execute={/usr/bin/postrm}"
