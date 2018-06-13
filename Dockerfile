@@ -6,7 +6,7 @@ ARG MEDIAINFO_VER=18.05
 ARG FILEBOT_VER=4.7.9
 ARG CHROMAPRINT_VER=1.4.3
 ARG LIBZEN_VER=0.4.37
-ARG FLOOD_VER=1.0.0
+ARG FLOOD_VER=master
 ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
@@ -90,7 +90,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && strip -s /usr/local/bin/fpcalc \
  && wget -q https://netcologne.dl.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz \
  && tar xJf FileBot_${FILEBOT_VER}-portable.tar.xz && rm FileBot_${FILEBOT_VER}-portable.tar.xz \
- && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/v${FLOOD_VER}.tar.gz | tar xz --strip 1 \
+ && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
  && npm install --production \
  && ln -sf /usr/local/lib/libmediainfo.so.0.0.0 /filebot/lib/x86_64/libmediainfo.so \
  && ln -sf /usr/local/lib/libzen.la /filebot/lib/x86_64/libzen.so \
