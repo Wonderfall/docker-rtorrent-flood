@@ -8,10 +8,6 @@ mkdir -p /data/Media/TV
 mkdir -p /data/Media/Animes
 mkdir -p /data/Media/Music
 
-sed -i -e "s|<FLOOD_SECRET>|$FLOOD_SECRET|g" \
-       -e "s|<CONTEXT_PATH>|$CONTEXT_PATH|g" /usr/flood/config.js
-
-
 sed -i -e 's#<FILEBOT_RENAME_MOVIES>#'"$FILEBOT_RENAME_MOVIES"'#' \
        -e 's#<FILEBOT_RENAME_METHOD>#'"$FILEBOT_RENAME_METHOD"'#' \
        -e 's#<FILEBOT_RENAME_MUSICS>#'"$FILEBOT_RENAME_MUSICS"'#' \

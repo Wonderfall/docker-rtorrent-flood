@@ -11,7 +11,7 @@ ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
     FLOOD_SECRET=supersecret \
-    CONTEXT_PATH=/ \
+    WEBROOT=/ \
     RTORRENT_SCGI=0 \
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
@@ -91,7 +91,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && wget -q https://netcologne.dl.sourceforge.net/project/filebot/filebot/FileBot_${FILEBOT_VER}/FileBot_${FILEBOT_VER}-portable.tar.xz \
  && tar xJf FileBot_${FILEBOT_VER}-portable.tar.xz && rm FileBot_${FILEBOT_VER}-portable.tar.xz \
  && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
- && npm install --production \
+ && npm install && npm cache clean --force \
  && ln -sf /usr/local/lib/libmediainfo.so.0.0.0 /filebot/lib/x86_64/libmediainfo.so \
  && ln -sf /usr/local/lib/libzen.la /filebot/lib/x86_64/libzen.so \
  && ln -sf /usr/local/bin/mediainfo /usr/bin/mediainfo \
@@ -106,7 +106,8 @@ COPY postrm /usr/bin/
 COPY config.js /usr/flood/
 COPY rtorrent.rc /home/torrent/.rtorrent.rc
 
-RUN chmod +x /usr/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/*
+RUN chmod +x /usr/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/* \
+ && cd /usr/flood/ && npm run build
 
 VOLUME /data /flood-db
 
