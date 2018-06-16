@@ -24,5 +24,4 @@ schedule = untied_directory,5,5,"stop_untied=/data/.watch/*.torrent"
 schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/tmp/rtorrent.sock"
 schedule = insufficient_disk_space,1,30,close_low_diskspace=500M
 
-method.set_key=event.download.finished,filebot,"execute={/usr/bin/postdl,$d.get_base_path=,$d.get_name=,$d.get_custom1=}"
-method.set_key=event.download.erased,filebot_cleaner,"execute={/usr/bin/postrm}"
+method.set_key=event.download.finished,unrar,"execute={/usr/local/bin/rtunrar.sh,$d.base_path=}"
