@@ -1,7 +1,5 @@
 #!/bin/sh
 
 if [ -d $1 ]; then
-  cd $1
-  unrar x *.rar &>/dev/null
+  find $1 -name '*.rar' -execdir unrar e {} \; 
 fi
-
