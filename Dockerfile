@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 
 ARG RTORRENT_VER=0.9.7
 ARG LIBTORRENT_VER=0.13.7
@@ -52,7 +52,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && git clone https://github.com/mirror/xmlrpc-c.git \
  && git clone https://github.com/Rudde/mktorrent.git \
  && cd /tmp/mktorrent && make -j ${NB_CORES} && make install \
- && cd /tmp/xmlrpc-c/stable && ./configure && make -j ${NB_CORES} && make install \
+ && cd /tmp/xmlrpc-c/advanced && ./configure && make -j ${NB_CORES} && make install \
  && cd /tmp/libtorrent && ./autogen.sh && ./configure && make -j ${NB_CORES} && make install \
  && cd /tmp/rtorrent && ./autogen.sh && ./configure --with-xmlrpc-c && make -j ${NB_CORES} && make install \
  && cd /tmp \
