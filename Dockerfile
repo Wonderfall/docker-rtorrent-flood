@@ -1,15 +1,15 @@
 FROM alpine:3.8
 
 ARG RTORRENT_VER=0.9.7
-ARG LIBTORRENT_VER=0.13.7
+ARG LIBTORRENT_VER=1.2.0-rc
 ARG MEDIAINFO_VER=18.08.1
 ARG FLOOD_VER=master
 ARG BUILD_CORES
 
-ENV UID=991 GID=991 \
-    FLOOD_SECRET=supersecret \
+ENV UID=1000 GID=1000 \
+    FLOOD_SECRET=6K7iVPhr3sW32h65 \
     WEBROOT=/ \
-    RTORRENT_SCGI=0 \
+    RTORRENT_SCGI=5000 \
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
@@ -81,7 +81,7 @@ RUN chmod +x /usr/local/bin/* /etc/s6.d/*/* /etc/s6.d/.s6-svscan/* \
 
 VOLUME /data /flood-db
 
-EXPOSE 3000 49184 49184/udp
+EXPOSE 3000 5000 49184 49184/udp
 
 LABEL description="BitTorrent client with WebUI front-end" \
       rtorrent="rTorrent BiTorrent client v$RTORRENT_VER" \
