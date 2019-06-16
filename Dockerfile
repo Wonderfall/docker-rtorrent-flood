@@ -1,8 +1,8 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ARG RTORRENT_VER=0.9.7
 ARG LIBTORRENT_VER=0.13.7
-ARG MEDIAINFO_VER=18.12
+ARG MEDIAINFO_VER=19.04
 ARG FLOOD_VER=master
 ARG BUILD_CORES
 
@@ -25,7 +25,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     xz \
     zlib-dev \
     cppunit-dev \
-    libressl-dev \
+    openssl-dev \
     ncurses-dev \
     curl-dev \
     binutils \
@@ -34,7 +34,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     ca-certificates \
     curl \
     ncurses \
-    libressl \
+    openssl \
     gzip \
     zip \
     zlib \
@@ -47,6 +47,8 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     findutils \
  && cd /tmp && mkdir libtorrent rtorrent \
  && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/v${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
+ && rm src/utils/diffie_hellman.cc \
+ && wget -q https://raw.githubusercontent.com/ppentchev/libtorrent/b293276bc5f17f6372146bd605a33340a8162072/src/utils/diffie_hellman.cc -O src/utils/diffie_hellman.cc \
  && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_VER}/rtorrent-${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
  && cd /tmp \
  && git clone https://github.com/mirror/xmlrpc-c.git \
