@@ -71,7 +71,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && strip -s /usr/local/bin/mktorrent \
  && strip -s /usr/local/bin/mediainfo \
  && ln -sf /usr/local/bin/mediainfo /usr/bin/mediainfo \
- && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
+ && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/Flood-UI/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
  && npm install && npm cache clean --force \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
