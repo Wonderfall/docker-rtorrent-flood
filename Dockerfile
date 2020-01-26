@@ -1,8 +1,8 @@
-FROM alpine:3.9
+FROM alpine:3.11
 
-ARG RTORRENT_VER=0.9.7
-ARG LIBTORRENT_VER=0.13.7
-ARG MEDIAINFO_VER=19.04
+ARG RTORRENT_VER=0.9.8
+ARG LIBTORRENT_VER=0.13.8
+ARG MEDIAINFO_VER=19.09
 ARG FLOOD_VER=master
 ARG BUILD_CORES
 
@@ -47,8 +47,6 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     findutils \
  && cd /tmp && mkdir libtorrent rtorrent \
  && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/v${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
- && rm src/utils/diffie_hellman.cc \
- && wget -q https://raw.githubusercontent.com/ppentchev/libtorrent/b293276bc5f17f6372146bd605a33340a8162072/src/utils/diffie_hellman.cc -O src/utils/diffie_hellman.cc \
  && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_VER}/rtorrent-${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
  && cd /tmp \
  && git clone https://github.com/mirror/xmlrpc-c.git \
@@ -71,7 +69,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && strip -s /usr/local/bin/mktorrent \
  && strip -s /usr/local/bin/mediainfo \
  && ln -sf /usr/local/bin/mediainfo /usr/bin/mediainfo \
- && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/jfurrow/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
+ && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/Flood-UI/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
  && npm install && npm cache clean --force \
  && apk del build-dependencies \
  && rm -rf /var/cache/apk/* /tmp/*
