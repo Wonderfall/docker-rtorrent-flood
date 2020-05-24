@@ -2,7 +2,7 @@ FROM alpine:3.11
 
 ARG RTORRENT_VER=0.9.8
 ARG LIBTORRENT_VER=0.13.8
-ARG MEDIAINFO_VER=19.09
+ARG MEDIAINFO_VER=20.03
 ARG FLOOD_VER=master
 ARG BUILD_CORES
 
@@ -50,8 +50,6 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && cd ../rtorrent && wget -qO- https://github.com/rakshasa/rtorrent/releases/download/v${RTORRENT_VER}/rtorrent-${RTORRENT_VER}.tar.gz | tar xz --strip 1 \
  && cd /tmp \
  && git clone https://github.com/mirror/xmlrpc-c.git \
- && git clone https://github.com/Rudde/mktorrent.git \
- && cd /tmp/mktorrent && make -j ${NB_CORES} && make install \
  && cd /tmp/xmlrpc-c/advanced && ./configure && make -j ${NB_CORES} && make install \
  && cd /tmp/libtorrent && ./autogen.sh && ./configure && make -j ${NB_CORES} && make install \
  && cd /tmp/rtorrent && ./autogen.sh && ./configure --with-xmlrpc-c && make -j ${NB_CORES} && make install \
@@ -66,7 +64,6 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
  && cd /tmp/MediaInfo_CLI_GNU_FromSource && ./CLI_Compile.sh \
  && cd /tmp/MediaInfo_CLI_GNU_FromSource/MediaInfo/Project/GNU/CLI && make install \
  && strip -s /usr/local/bin/rtorrent \
- && strip -s /usr/local/bin/mktorrent \
  && strip -s /usr/local/bin/mediainfo \
  && ln -sf /usr/local/bin/mediainfo /usr/bin/mediainfo \
  && mkdir /usr/flood && cd /usr/flood && wget -qO- https://github.com/Flood-UI/flood/archive/${FLOOD_VER}.tar.gz | tar xz --strip 1 \
