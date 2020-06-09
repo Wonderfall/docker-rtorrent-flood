@@ -1,4 +1,4 @@
-FROM alpine:3.11
+FROM alpine:3.12
 
 ARG RTORRENT_VER=0.9.8
 ARG LIBTORRENT_VER=0.13.8
@@ -40,7 +40,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     zlib \
     s6 \
     su-exec \
-    python \
+    python2 \
     nodejs \
     nodejs-npm \
     unrar \
