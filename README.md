@@ -8,7 +8,7 @@
 - Based on Alpine Linux.
 - rTorrent and libtorrent are compiled from source.
 - Provides by default a solid configuration.
-- [Flood](https://github.com/jfurrow/flood), a modern web UI for rTorrent with a Node.js backend and React frontend.
+- [Flood](https://github.com/jesec/flood), a modern web UI for rTorrent with a Node.js backend and React frontend (jesec fork).
 - Automatically unpack RAR releases (so Sonarr can deal with them).
 
 #### Build-time variables
@@ -22,20 +22,20 @@
 - **GID** : group id (defaut : 991)
 - **FLOOD_SECRET** : flood secret key (defaut : mysupersecretkey) (CHANGE IT)
 - **WEBROOT** : context path (base_URI) (default : /)
-- **RTORRENT_SCGI** : SCGI port (default : 0 for use local socket)
+- **RTORRENT_SOCK** : true or false (default : true, if false rtorrent listens on 0.0.0.0:5000)
 - **PKG_CONFIG_PATH** : `/usr/local/lib/pkgconfig` (don't touch)
+- **DISABLE_AUTH** : disables Flood built-in authentication system (default : false)
 
 ### Note
 - Run this container with tty mode enabled. In your `docker-compose.yml`, add `tty: true`. If you don't do this, [rtorrent will use 100% of CPU](https://github.com/Wonderfall/dockerfiles/issues/156).
-- Connect Flood UI to rTorrent through `Unix socket`. Enter `/tmp/rtorrent.sock` as rTorrent Socket.
+- Connect Flood UI to rTorrent through `Unix socket`. Enter `/tmp/rtorrent.sock` as rTorrent Socket. If SCGI is used, configure accordingly.
 
 #### Ports
 - **49184** (bind it).
 - **3000** [(reverse proxy!)](https://github.com/hardware/mailserver/wiki/Reverse-proxy-configuration)
 
 #### Tags
-- **latest** : latest versions of rTorrent/libtorrent.
-- Use **$RTORRENT_VER-$LIBTORRENT_VER** to get specific versions of rTorrent/libtorrent.
+- **latest** : latest versions of rTorrent/libtorrent/Flood.
 
 #### Volumes
 - **/data** : your downloaded torrents, session files, symlinks...
