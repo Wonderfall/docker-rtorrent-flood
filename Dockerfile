@@ -7,7 +7,7 @@ ARG FLOOD_VER=4.1.2
 ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
-    FLOOD_SECRET=supersecret \
+    FLOOD_SECRET=supersecret30charactersminimum \
     WEBROOT=/ \
     DISABLE_AUTH=false \
     RTORRENT_SOCK=true \

@@ -20,7 +20,7 @@
 #### Environment variables
 - **UID** : user id (default : 991)
 - **GID** : group id (defaut : 991)
-- **FLOOD_SECRET** : flood secret key (defaut : mysupersecretkey) (CHANGE IT)
+- **FLOOD_SECRET** : flood secret key (defaut : supersecret30charactersminimum) (CHANGE IT)
 - **WEBROOT** : context path (base_URI) (default : /)
 - **RTORRENT_SOCK** : true or false (default : true, if false rtorrent listens on 0.0.0.0:5000)
 - **PKG_CONFIG_PATH** : `/usr/local/lib/pkgconfig` (don't touch)

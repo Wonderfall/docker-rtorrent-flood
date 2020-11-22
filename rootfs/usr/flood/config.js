@@ -27,7 +27,7 @@ const CONFIG = {
   maxHistoryStates: 30,
   torrentClientPollInterval: 1000 * 5,
   torrentClientPollIntervalIdle: 1000 * 60 * 15,
-  secret: process.env.FLOOD_SECRET || 'secret',
+  secret: process.env.FLOOD_SECRET || 'supersecret30charactersminimum',
   configUser: connectionSettings
 };
 
