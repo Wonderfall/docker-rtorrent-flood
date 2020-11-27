@@ -20,7 +20,6 @@ max_uploads = 15
 network.xmlrpc.size_limit.set = 10000000
 
 schedule = watch_directory,1,1,"load.start=/data/.watch/*.torrent"
-schedule = untied_directory,5,5,"stop_untied=/data/.watch/*.torrent"
 schedule = scgi_permission,0,0,"execute.nothrow=chmod,\"g+w,o=\",/tmp/rtorrent.sock"
 schedule = insufficient_disk_space,1,30,close_low_diskspace=500M
 
