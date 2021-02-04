@@ -1,7 +1,7 @@
 ## wonderfall/rtorrent-flood
 
 ### What is this image?
-This image was made for my own use a few years ago and while it is being updated, the structure hasn't changed much. I do not trust third-party Dockerfiles, and so should you: consider this repository as a base for your own Docker setup. If you want to it "the Docker way", you should consider using proper containers for Flood and rtorrent, and use docker-compose.
+This image was made for my own use a few years ago and while it is being updated, the structure hasn't changed much. I do not trust third-party Dockerfiles, and so should you: consider this repository as a base for your own Docker setup. If you want to do it "the Docker way", you should consider using proper containers for Flood and rtorrent, and use docker-compose.
 
 ### Security
 As many images from the time it was first made, this image follows the principle of degrading privileges. It runs first as root to ensure permissions are set correctly and then only makes use of the UID/GID of your choice. While I agree it's not perfect (due to Linux insecurity), it seemed the best security/comfort balance at the time and it'll remain so for a while.
