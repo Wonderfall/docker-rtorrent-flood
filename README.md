@@ -1,8 +1,10 @@
 ## wonderfall/rtorrent-flood
 
-![](https://camo.githubusercontent.com/d8f5cb502f06e0ea1cc171550c2bed035293c1a9/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6a6f686e667572726f772e636f6d2f73686172652f666c6f6f642d73637265656e73686f742d612d303630362e706e67)
+### What is this image?
+This image was made for my own use a few years ago and while it is being updated, the structure hasn't changed much. I do not trust third-party Dockerfiles, and so should you: consider this repository as a base for your own Docker setup. If you want to it "the Docker way", you should consider using proper containers for Flood and rtorrent, and use docker-compose.
 
-**Be aware this image was made for my own use.**
+### Security
+As many images from the time it was first made, this image follows the principle of degrading privileges. It runs first as root to ensure permissions are set correctly and then only makes use of the UID/GID of your choice. While I agree it's not perfect (due to Linux insecurity), it seemed the best security/comfort balance at the time and it'll remain so for a while.
 
 #### Main features
 - Based on Alpine Linux.
@@ -31,8 +33,8 @@
 - Connect Flood UI to rTorrent through `Unix socket`. Enter `/tmp/rtorrent.sock` as rTorrent Socket. If SCGI is used, configure accordingly.
 
 #### Ports
-- **49184** (bind it).
-- **3000** [(reverse proxy!)](https://github.com/hardware/mailserver/wiki/Reverse-proxy-configuration)
+- **49184**
+- **3000** (use a reverse proxy)
 
 #### Tags
 - **latest** : latest versions of rTorrent/libtorrent/Flood.
@@ -40,3 +42,42 @@
 #### Volumes
 - **/data** : your downloaded torrents, session files, symlinks...
 - **/flood-db** : Flood databases.
+
+### My docker-compose
+
+```yaml
+  rtorrent:
+    image: wonderfall/rtorrent-flood
+    container_name: rtorrent
+    restart: unless-stopped
+    tty: true
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 49184:49184
+      - 49184:49184/udp
+    environment:
+      - UID=1000
+      - GID=1000
+      - FLOOD_SECRET=supersecret
+      # - RTORRENT_SOCK=false
+    volumes:
+      - /home/docker/flood:/flood-db
+      - /home/media/torrents:/data
+    networks:
+      - http_network
+      - rtorrent_network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.rtorrent.entrypoints=http
+      - traefik.http.routers.rtorrent.rule=Host(`box.domain.tld`)
+      - traefik.http.routers.rtorrent.middlewares=https-redirect@file
+      - traefik.http.routers.rtorrent-secure.entrypoints=https
+      - traefik.http.routers.rtorrent-secure.rule=Host(`box.domain.tld`)
+      - traefik.http.routers.rtorrent-secure.tls=true
+      - traefik.http.routers.rtorrent-secure.middlewares=secure-headers@file,hsts-headers@file
+      - traefik.http.routers.rtorrent-secure.tls.certresolver=http
+      - traefik.http.routers.rtorrent-secure.service=rtorrent
+      - traefik.http.services.rtorrent.loadbalancer.server.port=3000
+      - traefik.docker.network=http_network
+```
