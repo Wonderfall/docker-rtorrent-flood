@@ -6,20 +6,20 @@ This image was made for my own use a few years ago and while it is being updated
 ### Security
 As many images from the time it was first made, this image follows the principle of degrading privileges. It runs first as root to ensure permissions are set correctly and then only makes use of the UID/GID of your choice. While I agree it's not perfect (due to Linux insecurity), it seemed the best security/comfort balance at the time and it'll remain so for a while.
 
-#### Main features
+### Main features
 - Based on Alpine Linux.
 - rTorrent and libtorrent are compiled from source.
 - Provides by default a solid configuration.
 - [Flood](https://github.com/jesec/flood), a modern web UI for rTorrent with a Node.js backend and React frontend (jesec fork).
 - Automatically unpack RAR releases (so Sonarr can deal with them).
 
-#### Build-time variables
+### Build-time variables
 - **RTORRENT_VER** : rtorrent version
 - **LIBTORRENT_VER** : libtorrent version
 - **MEDIAINFO_VER** : libmediainfo version
 - **BUILD_CORES** : number of cores used during build
 
-#### Environment variables
+### Environment variables
 - **UID** : user id (default : 991)
 - **GID** : group id (defaut : 991)
 - **FLOOD_SECRET** : flood secret key (defaut : supersecret30charactersminimum) (CHANGE IT)
@@ -32,14 +32,14 @@ As many images from the time it was first made, this image follows the principle
 - Run this container with tty mode enabled. In your `docker-compose.yml`, add `tty: true`. If you don't do this, [rtorrent will use 100% of CPU](https://github.com/Wonderfall/dockerfiles/issues/156).
 - Connect Flood UI to rTorrent through `Unix socket`. Enter `/tmp/rtorrent.sock` as rTorrent Socket. If SCGI is used, configure accordingly.
 
-#### Ports
+### Ports
 - **49184**
 - **3000** (use a reverse proxy)
 
-#### Tags
+### Tags
 - **latest** : latest versions of rTorrent/libtorrent/Flood.
 
-#### Volumes
+### Volumes
 - **/data** : your downloaded torrents, session files, symlinks...
 - **/flood-db** : Flood databases.
 
