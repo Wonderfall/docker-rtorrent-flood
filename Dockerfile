@@ -1,9 +1,9 @@
-FROM alpine:3.13
+FROM alpine:3.14
 
 ARG RTORRENT_VER=0.9.8
 ARG LIBTORRENT_VER=0.13.8
 ARG MEDIAINFO_VER=21.03
-ARG FLOOD_VER=4.5.4
+ARG FLOOD_VER=4.6.1
 ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
@@ -43,7 +43,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     su-exec \
     python2 \
     nodejs \
-    nodejs-npm \
+    npm \
     unrar \
     findutils \
  && cd /tmp && mkdir libtorrent rtorrent \
