@@ -1,9 +1,9 @@
-FROM alpine:3.14
+FROM alpine:3.15
 
 ARG RTORRENT_VER=0.9.8
 ARG LIBTORRENT_VER=0.13.8
 ARG MEDIAINFO_VER=21.03
-ARG FLOOD_VER=4.6.1
+ARG FLOOD_VER=4.7.0
 ARG BUILD_CORES
 
 ENV UID=991 GID=991 \
@@ -14,6 +14,7 @@ ENV UID=991 GID=991 \
     PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
 RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
+ && echo "@3.14 https://nl.alpinelinux.org/alpine/v3.14/main" >> /etc/apk/repositories \
  && apk -U upgrade \
  && apk add -t build-dependencies \
     build-base \
@@ -44,7 +45,7 @@ RUN NB_CORES=${BUILD_CORES-`getconf _NPROCESSORS_CONF`} \
     python2 \
     nodejs \
     npm \
-    unrar \
+    unrar@3.14 \
     findutils \
  && cd /tmp && mkdir libtorrent rtorrent \
  && cd libtorrent && wget -qO- https://github.com/rakshasa/libtorrent/archive/v${LIBTORRENT_VER}.tar.gz | tar xz --strip 1 \
