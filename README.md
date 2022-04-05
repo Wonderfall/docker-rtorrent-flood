@@ -1,3 +1,5 @@
+⚠️**THIS IMAGE IS DEPRECATED, USE https://github.com/Wonderfall/docker-rtorrent INSTEAD** ⚠️
+
 ## wonderfall/rtorrent-flood
 
 ### What is this image?
